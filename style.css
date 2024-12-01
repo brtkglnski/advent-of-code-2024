@@ -1,0 +1,19 @@
+body{
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    padding:0;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+.dayTask{
+    background-color: rgb(9, 112, 0);
+    color:white;
+    width: 16vw;
+    padding: 2%;
+    aspect-ratio: 1/1;
+    border-radius: 10%;
+}
+.dayTask:nth-child(even){
+    background-color: rgb(112, 0, 0);
+}
