@@ -80,3 +80,28 @@ function isSafeReport(levels) {
     
     return (isIncreasing || isDecreasing) && validDifferences;
 }
+
+function dayThree(){
+const inputText = document.getElementById("inputText3").value;
+const output = document.getElementById("output3");
+var total = 0;
+var total2 = 0;
+const regex = /mul\((\d+),(\d+)\)/g;
+let match;
+
+while ((match = regex.exec(inputText)) !== null) {
+    total += Number(match[1])*Number(match[2]);
+}
+
+//part2
+let tableMatch = [];
+var splitByDo = inputText.split('do()');
+splitByDo.forEach(line =>{
+tableMatch.push(line.split('don\'t()')[0]);
+});
+while ((match = regex.exec(tableMatch)) !== null) {
+    total2 += Number(match[1])*Number(match[2]);
+}
+output.innerHTML = "Total (part 1): " + total + "\nTotal (part 2): "+total2;
+}
+
