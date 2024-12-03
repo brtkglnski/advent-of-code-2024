@@ -38,3 +38,45 @@ function dayOne() {
     console.log(similarityScore);
     output.innerHTML = "Distance: " + distanceSum + "<br>Similarity score: " + similarityScore;
 }
+
+function dayTwo() {
+    const inputText = document.getElementById("inputText2").value;
+    const output = document.getElementById("output2");
+    const lines = inputText.split(/\r?\n/);
+    let safeReports = 0;
+
+    lines.forEach((line) => {
+        const levels = line.split(/\s+/).map(Number);
+        
+        if (isSafeReport(levels)) {
+            safeReports++;
+            return;
+        }
+        
+        for (let i = 0; i < levels.length; i++) {
+            const modifiedLevels = levels.filter((_, index) => index !== i);
+            if (isSafeReport(modifiedLevels)) {
+                safeReports++;
+                break;
+            }
+        }
+    });
+    
+    output.innerHTML = "Safe reports: " + safeReports;
+}
+
+function isSafeReport(levels) {
+    const isIncreasing = levels.every((level, i) => 
+        i === 0 || level > levels[i-1]
+    );
+    
+    const isDecreasing = levels.every((level, i) => 
+        i === 0 || level < levels[i-1]
+    );
+
+    const validDifferences = levels.every((level, i) => 
+        i === 0 || Math.abs(level - levels[i-1]) >= 1 && Math.abs(level - levels[i-1]) <= 3
+    );
+    
+    return (isIncreasing || isDecreasing) && validDifferences;
+}
