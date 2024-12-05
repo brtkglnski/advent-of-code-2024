@@ -105,3 +105,93 @@ while ((match = regex.exec(tableMatch)) !== null) {
 output.innerHTML = "Total (part 1): " + total + "\nTotal (part 2): "+total2;
 }
 
+//dayFour
+
+function dayFour(){
+    const inputText = document.getElementById("inputText4").value;
+    const output = document.getElementById("output4");
+
+    var matrixRow = inputText.split("\n");
+    var matrix = matrixRow.map(row => row.split(""));
+    var sum = 0;
+    var sum2 = 0;
+    console.log(matrix);
+    sum += findXMAS(matrix);
+    sum2 += findX_Mas(matrix);
+    matrix = rotateMatrix90(matrix);
+    sum += findXMAS(matrix);
+    sum2 += findX_Mas(matrix);
+    console.log(matrix);
+    matrix = rotateMatrix90(matrix);
+    sum += findXMAS(matrix);
+    sum2 += findX_Mas(matrix);
+    console.log(matrix);
+    matrix = rotateMatrix90(matrix);
+    sum += findXMAS(matrix);
+    sum2 += findX_Mas(matrix);
+    console.log(matrix);
+    output.innerHTML = "Total: "+sum + "\nX-MAS Total: " + sum2;
+
+}
+function findXMAS(matrix){
+    const rows = matrix.length;
+    const cols = matrix[0].length;
+    var totalFound = 0;
+    for(let j = 0; j<= cols; j++) {
+        for (let i = 0; i <= rows - 4; i++) { // Ensure there is room for "XMAS"
+            if (
+                matrix[i][j] === 'X' &&
+                matrix[i + 1][j] === 'M' &&
+                matrix[i + 2][j] === 'A' &&
+                matrix[i + 3][j] === 'S'
+            ) {
+                totalFound++;
+            }
+            if (
+                matrix[i][j] === 'X' &&
+                matrix[i + 1][j+1] === 'M' &&
+                matrix[i + 2][j+2] === 'A' &&
+                matrix[i + 3][j+3] === 'S'
+            ) {
+                totalFound++;
+            }
+        }
+    }
+    return totalFound;
+    //part 1
+
+}
+function findX_Mas(matrix){
+    const rows = matrix.length;
+    const cols = matrix[0].length;
+    var totalFound = 0;
+    for(let j = 1; j< cols-1; j++) {
+        for (let i = 1; i < rows-1; i++) { 
+            if (
+                matrix[i][j] === 'A' &&
+                matrix[i + 1][j+1] === 'M' &&
+                matrix[i - 1][j-1] === 'S' &&
+                matrix[i + 1][j-1] === 'S' &&
+                matrix[i - 1][j+1] === 'M'
+            ) {
+                totalFound++;
+            }
+        }
+    }
+    return totalFound;
+}
+
+function rotateMatrix90(matrix) {
+    
+    const rows = matrix.length;
+    const cols = matrix[0].length;
+    let rotated = Array.from({ length: cols }, () => Array(rows));
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            rotated[col][rows - row - 1] = matrix[row][col];
+        }
+    }
+
+    return rotated;
+}
